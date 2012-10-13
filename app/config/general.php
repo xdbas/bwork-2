@@ -15,7 +15,7 @@ $config['module_path'] = APPLICATION_PATH . 'modules' . DIRECTORY_SEPARATOR;
 $config['sub_url'] = '/bwork-2/';
 
 $config['database']['host'] = '127.0.0.1';
-$config['database']['dbname'] = 'deb12070n2_zer0';
-$config['database']['username'] = 'deb12070n2_zer0';
-$config['database']['password'] = 'kotskop';
+$config['database']['dbname'] = 'bwork';
+$config['database']['username'] = 'root';
+$config['database']['password'] = 'root';
 $config['database']['port'] = '3306';
