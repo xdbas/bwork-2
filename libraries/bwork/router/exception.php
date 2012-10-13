@@ -18,6 +18,8 @@
  * @subpackage Bwork_Router
  * @version v 0.1
  */
-class Bwork_Router_Exception extends Exception
+namespace Bwork\Router;
+
+class Exception extends \Exception
 {
 }

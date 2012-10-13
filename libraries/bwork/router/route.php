@@ -18,7 +18,9 @@
  * @subpackage Bwork_Route
  * @version v 0.1
  */
-class Bwork_Router_Route
+namespace Bwork\Router;
+
+class Route
 {
 
     /**

@@ -21,7 +21,11 @@
  * @version v 0.2
  * @abstract
  */
-abstract class Bwork_Bootstrap_AbstractBootstrap
+namespace Bwork\Bootstrap;
+
+use ReflectionMethod;
+
+abstract class AbstractBootstrap
 {
 
     /**
@@ -43,14 +47,14 @@ abstract class Bwork_Bootstrap_AbstractBootstrap
 
                 if($returnData !== null) {
                     if(is_object($returnData) === false) {
-                        throw new Bwork_Bootstrap_Exception(sprintf('The return data of %s should be either null or an object.', $value));
+                        throw new Exception(sprintf('The return data of %s should be either null or an object.', $value));
                     }
 
-                    if($returnData instanceof Bwork_Bootstrap_Alias) {
-                        Bwork_Core_Registry::getInstance()->setResource($returnData->object, $returnData->name, $returnData->override);
+                    if($returnData instanceof Alias) {
+                        \Bwork\Core\Registry::getInstance()->setResource($returnData->object, $returnData->name, $returnData->override);
                     }
                     else {
-                        Bwork_Core_Registry::getInstance()->setResource($returnData);
+                        \Bwork\Core\Registry::getInstance()->setResource($returnData);
                     }
                 }
                 

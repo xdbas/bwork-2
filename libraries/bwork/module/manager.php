@@ -18,7 +18,9 @@
  * @subpackage Bwork_Module
  * @version v 0.2
  */
-class Bwork_Module_Manager implements Bwork_Module_Module
+namespace Bwork\Module;
+use ReflectionClass;
+class Manager implements Module
 {
     
     /**
@@ -40,7 +42,7 @@ class Bwork_Module_Manager implements Bwork_Module_Module
     public function addModules(array $modules)
     {
         if(is_array($modules) === false) {
-            throw new Bwork_Module_Exception('Added modules are not in the correct format');
+            throw new Exception('Added modules are not in the correct format');
         }
 
         foreach ($modules as $module) {
@@ -59,7 +61,7 @@ class Bwork_Module_Manager implements Bwork_Module_Module
     public function addModule($moduleName)
     {
         if(in_array($moduleName, $this->modules) === true) {
-            throw new Bwork_Module_Exception(sprintf('Module %s is already loaded.', $moduleName));
+            throw new Exception(sprintf('Module %s is already loaded.', $moduleName));
         }
 
         $this->modules[] = strtolower($moduleName);
@@ -99,11 +101,11 @@ class Bwork_Module_Manager implements Bwork_Module_Module
      */
     public function initialize($moduleName)
     {
-        $config     = Bwork_Core_Registry::GetInstance()->getResource('Bwork_Config_ConfigHandler');
+        $config     = \Bwork\Core\Registry::GetInstance()->getResource('Bwork\Config\ConfigHandler');
         $modulePath = $config->get('module_path');
 
         if(is_dir($modulePath.strtolower($moduleName)) === false) {
-            throw new Bwork_Module_Exception(sprintf('The directory for module [%s] cannot be found.', $moduleName));
+            throw new Exception(sprintf('The directory for module [%s] cannot be found.', $moduleName));
         }
 
         $bootstrapFileName  = strtolower($moduleName).'bootstrap.php';
@@ -115,12 +117,12 @@ class Bwork_Module_Manager implements Bwork_Module_Module
         $configFile     = $configPath.$configFilename;
 
         if(file_exists($configFile) === false) {
-            throw new Bwork_Module_Exception(sprintf('Config file [%s] was not found for module [%s]', $configFilename, $moduleName));
+            throw new Exception(sprintf('Config file [%s] was not found for module [%s]', $configFilename, $moduleName));
         }
 
         $config->loadFile($configFile);
 
-        if(Bwork_Loader_ApplicationAutoloader::fileExists($bootstrapFile) === true) {
+        if(\Bwork_Loader_ApplicationAutoloader::fileExists($bootstrapFile) === true) {
             require_once $bootstrapFile;
 
             $reflectionClass = new ReflectionClass($bootstrapClassName);

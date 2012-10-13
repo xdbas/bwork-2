@@ -18,6 +18,7 @@
  * @subpackage Bwork_Module
  * @version v 0.1
  */
-class Bwork_Module_Exception extends Exception
+namespace Bwork\Module;
+class Exception extends \Exception
 {
 }

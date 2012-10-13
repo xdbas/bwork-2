@@ -67,9 +67,9 @@ class Bwork_Loader_ApplicationAutoloader implements Bwork_Loader_Autoloader
      */
     public static function load($filename, $type)
     {
-        $registry = Bwork_Core_Registry::getInstance();
-        $config   = $registry->getResource('Bwork_Config_Confighandler');
-        $router   = $registry->getResource('Bwork_Router_Router');
+        $registry = \Bwork\Core\Registry::getInstance();
+        $config   = $registry->getResource('Bwork\Config\Confighandler');
+        $router   = $registry->getResource('Bwork\Router\Router');
 
         if(($module = $router->module) !== null) {
             $filename     = str_replace($module.'_', '', $filename);

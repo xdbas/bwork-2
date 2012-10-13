@@ -18,7 +18,11 @@
  * @subpackage Bwork_Core
  * @version v 0.4
  */
-class Bwork_Core_Registry extends ArrayObject
+namespace Bwork\Core;
+
+use ArrayObject, RuntimeException;
+
+class Registry extends ArrayObject
 {
     const NO_OVERRIDING = 1;
     const OVERRIDING    = 2;

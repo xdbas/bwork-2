@@ -10,23 +10,24 @@
  */
 
 /**
- * Module
+ * Default
  *
- * A Router handler which will check if the segments match a module
+ * This class is a handler for the router and will attempt to resolve routes via
+ * the config class
  *
  * @package Bwork
  * @subpackage Bwork_Router_Handler
- * @version v 0.3
+ * @version v 0.2
  */
 namespace Bwork\Router\Handler;
 
-final class Module 
+final class DefaultHandler
     implements \Bwork\Router\Handler
 {
     
     /**
      * Will store the route with the parameters gained when resolving a route
-     * 
+     *
      * @var array
      * @access protected
      */
@@ -41,33 +42,28 @@ final class Module
      */
     public function checkRoute(array $uri)
     {
-        $registry      = \Bwork\Core\Registry::getInstance();
-        $config        = $registry->getResource('Bwork\Config\Confighandler');
-        $moduleManager = $registry->getResource('Bwork\Module\Manager');
+        $uri    = implode('/', $uri);
+        $config = \Bwork\Core\Registry::getInstance()->getResource('Bwork\Config\Confighandler');
+        
+        if($config->exists('route')) {
+            $routes = $config->get('route');
+            if(array_key_exists($uri, $routes)) {
 
-        $modules = $moduleManager->getModules();
-
-        if(count($modules) < 1
-            || count($uri) < 1) {
-            return false;
-        }
-
-        foreach($modules as $module) {
-            if($module == strtolower($uri[0])) {
-                $moduleManager->initialize($module);
-                $configModule = $config->get($module);
-
+                $route = $routes[$uri];
                 $this->route = new \Bwork\Router\Route(
-                    isset($uri[1])? $uri[1] : $configModule['default_controller'],
-                    isset($uri[2])? $uri[2] : $configModule['default_action'],
-                    $module
+                    $route['controller'],
+                    $route['action'],
+                    $route['module'],
+                    $route['mockParams']
                 );
 
                 return true;
             }
-        }   	
+        }
+        
+        return false;
     }
-
+    
     /**
      * Will return the resolved Params used for dispatching
      *
@@ -78,5 +74,4 @@ final class Module
     {
         return $this->route;
     }
-
 }

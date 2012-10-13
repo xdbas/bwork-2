@@ -18,6 +18,8 @@
  * @subpackage Bwork_Bootstrap
  * @version v 0.1
  */
-class Bwork_Bootstrap_Exception extends Exception
+namespace Bwork\Bootstrap;
+
+class Exception extends \Exception
 {
 }

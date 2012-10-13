@@ -14,7 +14,9 @@
  * @subpackage Bwork_Config
  * @version v 0.1
  */
-interface Bwork_Config_Handler
+namespace Bwork\Config;
+
+interface Handler
 {
     
     /**

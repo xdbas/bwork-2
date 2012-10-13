@@ -1,30 +1,32 @@
 <?php
 
-class Bootstrap extends Bwork_Bootstrap_AbstractBootstrap {
+namespace App;
+
+class Bootstrap extends \Bwork\Bootstrap\AbstractBootstrap {
        
     public function _initConfig()
     {
-        $config = Bwork_Core_Registry::getInstance()
-                ->getResource('Bwork_Config_Confighandler')
+        $config = \Bwork\Core\Registry::getInstance()
+                ->getResource('Bwork\Config\Confighandler')
                 ->loadFile(APPLICATION_PATH.'config'.DIRECTORY_SEPARATOR.'route.php');
     }
     
     public function _initLayout()
     {
-        $layout = new Bwork_Layout_Default();
+        $layout = new \Bwork\Layout\PHP();
         $layout->setLayout('layout.php');
 
-        return new Bwork_Bootstrap_Alias('Bwork_Layout_Layout', $layout);
+        return new \Bwork\Bootstrap\Alias('Bwork\Layout\Layout', $layout);
     }
     
     public function _initHelper()
     {
-        Bwork_Helper_Handler::registerNamespace('Bwork_Helper');
+        //Bwork_Helper_Handler::registerNamespace('Bwork_Helper');
     }
 
     public function _initModule()
     {
-        $module = new Bwork_Module_Manager();
+        $module = new \Bwork\Module\Manager();
         $module->addModule('admin');
 
         return $module;

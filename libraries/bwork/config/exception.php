@@ -18,6 +18,7 @@
  * @subpackage Bwork_Config
  * @version v 0.1
  */
-class Bwork_Config_Exception extends Exception
+namespace Bwork\Config;
+class Exception extends \Exception
 {
 }

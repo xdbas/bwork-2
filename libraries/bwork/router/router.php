@@ -20,7 +20,9 @@
  * @subpackage Bwork_Router
  * @version v 0.2
  */
-class Bwork_Router_Router
+namespace Bwork\Router;
+
+class Router
 {
     
     /**
@@ -84,7 +86,7 @@ class Bwork_Router_Router
      * @access public
      * @return Bwork_Router_Router
      */
-    public function __construct(Bwork_Http_Request $requestObject)
+    public function __construct(\Bwork\Http\Request $requestObject)
     {
         $this->uriParams = $requestObject->countParams() > 0? $requestObject->getParams() : array();
         $this->requestUri = $requestObject->__toString();
@@ -98,10 +100,10 @@ class Bwork_Router_Router
      * @throws Bwork_Router_Exception
      * @return Bwork_Router_Router
      */
-    public function setHandler(Bwork_Router_Handler $handler)
+    public function setHandler(Handler $handler)
     {
-        if($handler instanceof Bwork_Router_Handler == false) {
-            throw new Bwork_Router_Exception(sprintf('%s should be and instance of Bwork_Router_Handler_Interface', get_class($handler)));
+        if($handler instanceof Handler == false) {
+            throw new Exception(sprintf('%s should be and instance of Bwork_Router_Handler_Interface', get_class($handler)));
         }
         
         $this->handlers[get_class($handler)] = $handler;
@@ -160,9 +162,9 @@ class Bwork_Router_Router
            $this->action = $this->uriParams[1];
         }
         else {
-            $config = Bwork_Core_Registry::getInstance()->getResource('Bwork_Config_Confighandler');
+            $config = \Bwork\Core\Registry::getInstance()->getResource('Bwork\Config\Confighandler');
             if($config->exists('default_action') == false) {
-                throw new Bwork_Router_Exception('There was no default_action property set in Bwork_Config_Confighandler');
+                throw new Exception('There was no default_action property set in Bwork_Config_Confighandler');
             }
             $this->action = $config->get('default_action');
         }
@@ -180,15 +182,15 @@ class Bwork_Router_Router
      */
     public function setDefault()
     {
-        $config = Bwork_Core_Registry::getInstance()->getResource('Bwork_Config_Confighandler');
+        $config = \Bwork\Core\Registry::getInstance()->getResource('Bwork\Config\Confighandler');
         
         if($config->exists('default_controller') == false) {
-            throw new Bwork_Router_Exception('There was no default_controller property set in Bwork_Config_Confighandler');
+            throw new Exception('There was no default_controller property set in Bwork_Config_Confighandler');
         }
         $this->controller = $config->get('default_controller');
         
         if($config->exists('default_action') == false) {
-            throw new Bwork_Router_Exception('There was no default_action property set in Bwork_Config_Confighandler');
+            throw new Exception('There was no default_action property set in Bwork_Config_Confighandler');
         }
         $this->action = $config->get('default_action');
         

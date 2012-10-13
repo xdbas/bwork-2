@@ -14,7 +14,9 @@
  * @subpackage Bwork_Config
  * @version v 0.1
  */
-interface Bwork_Config_Parser
+namespace Bwork\Config;
+
+interface Parser
 {
     
      /**

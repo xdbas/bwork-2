@@ -15,7 +15,8 @@
  * @subpackage Bwork_Data
  * @version v 0.1
  */
-interface Bwork_Data_Interface
+namespace Bwork\Data;
+interface Data
 {
 
     /**

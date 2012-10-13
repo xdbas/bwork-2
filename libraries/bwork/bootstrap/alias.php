@@ -21,7 +21,8 @@
  * @version v 0.2
  * @abstract
  */
-class Bwork_Bootstrap_Alias
+namespace Bwork\Bootstrap;
+class Alias
 {
     
     /**
@@ -57,7 +58,7 @@ class Bwork_Bootstrap_Alias
      * @param int $override
      * @return Bwork_Bootstrap_Alias
      */
-    public function __construct($name, $object, $override = Bwork_Core_Registry::NO_OVERRIDING)
+    public function __construct($name, $object, $override = \Bwork\Core\Registry::NO_OVERRIDING)
     {
         $this->name     = $name;
         $this->object   = $object;

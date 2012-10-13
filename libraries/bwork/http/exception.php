@@ -18,6 +18,7 @@
  * @subpackage Bwork_Http
  * @version v 0.1
  */
-class Bwork_Http_Exception extends Exception
+namespace Bwork\Http;
+class Exception extends \Exception
 {
 }

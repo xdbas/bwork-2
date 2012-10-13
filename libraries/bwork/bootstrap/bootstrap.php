@@ -20,7 +20,9 @@
  * @uses Bwork_Bootstrap_AbstractBootstrap
  * @version v 0.1
  */
-class Bwork_Bootstrap_Bootstrap extends Bwork_Bootstrap_AbstractBootstrap
+namespace Bwork\Bootstrap;
+
+class Bootstrap extends AbstractBootstrap
 {
     
     /**
@@ -31,7 +33,7 @@ class Bwork_Bootstrap_Bootstrap extends Bwork_Bootstrap_AbstractBootstrap
      */
     public function _initHttpRequest()
     {
-        $httpRequest = new Bwork_Http_Request();
+        $httpRequest = new \Bwork\Http\Request();
         
         return $httpRequest;
     }
@@ -44,7 +46,7 @@ class Bwork_Bootstrap_Bootstrap extends Bwork_Bootstrap_AbstractBootstrap
      */
     public function _initHttpResponse()
     {
-        $httpResponse = new Bwork_Http_Response();
+        $httpResponse = new \Bwork\Http\Response();
         
         return $httpResponse;
     }
@@ -56,11 +58,11 @@ class Bwork_Bootstrap_Bootstrap extends Bwork_Bootstrap_AbstractBootstrap
      * @return Bwork_Config_Confighandler 
      */
     public function _initConfig() {
-        $config = new Bwork_Config_Confighandler();
+        $config = new \Bwork\Config\Confighandler();
         
-        $config->setParser('php', new Bwork_Config_Parser_PHPConfigParser())
-               ->setParser('xml', new Bwork_Config_Parser_XMLConfigParser())
-               ->setParser('ini', new Bwork_Config_Parser_IniConfigParser())
+        $config->setParser('php', new \Bwork\Config\Parser\PHPConfigParser())
+               ->setParser('xml', new \Bwork\Config\Parser\XMLConfigParser())
+               ->setParser('ini', new \Bwork\Config\Parser\IniConfigParser())
                ->loadFile(APPLICATION_PATH.'config'.DIRECTORY_SEPARATOR.'general.php');
         
         return $config;
@@ -74,12 +76,13 @@ class Bwork_Bootstrap_Bootstrap extends Bwork_Bootstrap_AbstractBootstrap
      */
     public function _initRouter()
     {
-        $router = new Bwork_Router_Router(
-                Bwork_Core_Registry::getInstance()->getResource('Bwork_Http_Request')
+        $router = new \Bwork\Router\Router(
+                \Bwork\Core\Registry::getInstance()->getResource('Bwork\Http\Request')
         );
-        $router->setHandler(new Bwork_Router_Handler_Default())
-               ->setHandler(new Bwork_Router_Handler_Module());
-               //->setHandler(new Bwork_Router_Handler_SubPath());
+
+
+        $router->setHandler(new \Bwork\Router\Handler\DefaultHandler())
+                ->setHandler(new \Bwork\Router\Handler\Module());
         
         return $router;
     }

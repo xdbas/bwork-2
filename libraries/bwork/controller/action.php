@@ -20,7 +20,9 @@
  * @version v 0.1
  * @abstract
  */
-abstract class Bwork_Controller_Action
+namespace Bwork\Controller;
+use ReflectionMethod;
+abstract class Action
 {
     
     /**
@@ -62,11 +64,11 @@ abstract class Bwork_Controller_Action
     public function __construct()
     {
         $this->setRequest(
-            Bwork_Core_Registry::getInstance()->getResource('Bwork_Http_Request')
+            \Bwork\Core\Registry::getInstance()->getResource('Bwork\Http\Request')
         ); 
         
         $this->setResponse(
-            Bwork_Core_Registry::getInstance()->getResource('Bwork_Http_Response')
+            \Bwork\Core\Registry::getInstance()->getResource('Bwork\Http\Response')
         );
     }
     
@@ -77,7 +79,7 @@ abstract class Bwork_Controller_Action
      * @access public
      * @return Bwork_Controller_Action
      */
-    public function setRequest(Bwork_Http_Request $request)
+    public function setRequest(\Bwork\Http\Request $request)
     {
         $this->request = $request;
 
@@ -102,7 +104,7 @@ abstract class Bwork_Controller_Action
      * @access public
      * @return Bwork_Controller_Action
      */
-    public function setResponse(Bwork_Http_Response $response)
+    public function setResponse(\Bwork\Http\Response $response)
     {
         $this->response = $response;
 
@@ -127,7 +129,7 @@ abstract class Bwork_Controller_Action
      * @access protected
      * @return Bwork_Controller_Action
      */
-    protected function setMockParams(Bwork_Router_Router $router)
+    protected function setMockParams(\Bwork\Router\Router $router)
     {
         $this->mockParams = $router->mockParams;
 
@@ -142,9 +144,9 @@ abstract class Bwork_Controller_Action
      * @throws Bwork_Controller_Exception
      * @return void
      */
-    public function invoke(Bwork_Router_Router $router)
+    public function invoke(\Bwork\Router\Router $router)
     {
-        Bwork_Controller_Action::__construct();
+        \Bwork\Controller\Action::__construct();
         $this->setMockParams($router);
         
         $action = $router->action.'Action';
@@ -153,7 +155,7 @@ abstract class Bwork_Controller_Action
         }
         
         if(is_callable(array($this, $action)) == false) {
-            throw new Bwork_Controller_Exception(sprintf('Unable to call action [%s]', $action));
+            throw new Exception(sprintf('Unable to call action [%s]', $action));
         }
         
         $methodReflection = new ReflectionMethod($this, $action);
@@ -167,7 +169,7 @@ abstract class Bwork_Controller_Action
            $this->handleView($returnData); 
         }
         else {
-            throw new Bwork_Controller_Exception('Return type from controllerAction should either be a string or an object');
+            throw new Exception('Return type from controllerAction should either be a string or an object');
         }
     }
     
@@ -191,16 +193,16 @@ abstract class Bwork_Controller_Action
      * @access protected
      * @return void
      */
-    protected function handleView(Bwork_View_View $view)
+    protected function handleView(\Bwork\View\View $view)
     {
-        if($view instanceof Bwork_View_View == false) {
-            throw new Bwork_Controller_Exception('ControllerAction return value should be an instance of Bwork_View_View');
+        if($view instanceof \Bwork\View\View == false) {
+            throw new Exception('ControllerAction return value should be an instance of Bwork_View_View');
         }
         
         $content = $view->fetch();
 
         if($this->layoutEnabled == true) {
-            $layout = Bwork_Core_Registry::getInstance()->getResource('Bwork_Layout_Layout');
+            $layout = \Bwork\Core\Registry::getInstance()->getResource('Bwork\Layout\Layout');
             
             $layout->mergeVariables($view->getVariables());
             $layout->setContent($content);
@@ -222,10 +224,10 @@ abstract class Bwork_Controller_Action
     public function __call($name, $arguments)
     {
         if(substr($name, -6) == 'Action') {
-            throw new Bwork_Controller_Exception(sprintf('Action %s does not exists and has been caught by __call', $name), 404);
+            throw new Exception(sprintf('Action %s does not exists and has been caught by __call', $name), 404);
         }
                 
-        throw new Bwork_Controller_Exception(sprintf('Method %s does not exists and has been caught by __call', $name));
+        throw new Exception(sprintf('Method %s does not exists and has been caught by __call', $name));
     }
     
 }

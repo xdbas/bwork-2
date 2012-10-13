@@ -18,7 +18,9 @@
  * @subpackage Bwork_Http
  * @version v 0.1
  */
-class Bwork_Http_Response
+namespace Bwork\Http;
+
+class Response
 {
     
     /**
@@ -91,7 +93,7 @@ class Bwork_Http_Response
             $description = $this->response[$code];
         }
         else if($description === null) {
-            throw new Bwork_Http_Exception(sprintf('Code not found, please define a description for [%s]', $code));
+            throw new Exception(sprintf('Code not found, please define a description for [%s]', $code));
         }
         
         $this->statusCode    = $code;

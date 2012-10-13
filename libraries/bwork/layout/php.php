@@ -32,7 +32,9 @@
  * @subpackage Bwork_Layout
  * @version v 0.2
  */
-class Bwork_Layout_Default implements Bwork_Layout_Layout
+namespace Bwork\Layout;
+
+class PHP implements Layout
 {
     
     /**
@@ -71,35 +73,35 @@ class Bwork_Layout_Default implements Bwork_Layout_Layout
      */
     public function setLayout($layout, $module = null)
     {
-        $registry = Bwork_Core_Registry::getInstance();
-        $config   = $registry->getResource('Bwork_Config_Confighandler');
-        $router   = $registry->getResource('Bwork_Router_Router');
+        $registry = \Bwork\Core\Registry::getInstance();
+        $config   = $registry->getResource('Bwork\Config\Confighandler');
+        $router   = $registry->getResource('Bwork\Router\Router');
         
         if($module !== null) {
-            if($registry->resourceExists('Bwork_Module_Manager') === false) {
-                throw new Bwork_Layout_Exception('No module initialization has took place');
+            if($registry->resourceExists('Bwork\Module\Manager') === false) {
+                throw new Exception('No module initialization has took place');
             }
             
-            if($registry->getResource('Bwork_Module_Manager')->moduleExists($module) === false) {
-                throw new Bwork_Layout_Exception(sprintf('Module [%s] has not yet been initialized', $module));
+            if($registry->getResource('Bwork\Module\Manager')->moduleExists($module) === false) {
+                throw new Exception(sprintf('Module [%s] has not yet been initialized', $module));
             }
             
             $pathToModule = $config->get('module_path').strtolower($module) . DIRECTORY_SEPARATOR;
             $moduleConfig = $config->get($module);
             $path         = $pathToModule.$moduleConfig['layouts_path'];
 
-            if(Bwork_Loader_ApplicationAutoloader::fileExists(($file = $path.$layout)) === true) {
+            if(\Bwork_Loader_ApplicationAutoloader::fileExists(($file = $path.$layout)) === true) {
                 $this->layout = $file;
                 return $this;
             }
         }
 
-        if(Bwork_Loader_ApplicationAutoloader::fileExists(($file = $config->get('layouts_path').$layout)) === true) {
+        if(\Bwork_Loader_ApplicationAutoloader::fileExists(($file = $config->get('layouts_path').$layout)) === true) {
             $this->layout = $file;
             return $this;
         }
         else {
-            throw new Bwork_Layout_Exception(sprintf('Layout [%s] could not be found', $layout));
+            throw new Exception(sprintf('Layout [%s] could not be found', $layout));
         }
     }
     

@@ -18,6 +18,7 @@
  * @subpackage Bwork_Controller
  * @version v 0.1
  */
-class Bwork_Controller_Exception extends Exception
+namespace Bwork\Controller;
+class Exception extends \Exception
 {
 }

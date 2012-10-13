@@ -1,11 +1,13 @@
 <?php
 
-class HomeController extends Bwork_Controller_Action {
-    
+class HomeController extends \Bwork\Controller\Action {
     
     public function indexAction() {
-        return new Bwork_View_Default();
+
+    	$mode = new TestModel();
+    	print_r($mode->test());
+
+        return new \Bwork\View\PHP();
     }
-    
     
 }

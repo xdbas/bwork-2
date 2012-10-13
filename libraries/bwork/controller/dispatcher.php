@@ -18,7 +18,9 @@
  * @subpackage Bwork_Controller
  * @version v 0.4
  */
-class Bwork_Controller_Dispatcher
+namespace Bwork\Controller;
+use ReflectionClass, App;
+class Dispatcher
 {
 
     /**
@@ -30,21 +32,21 @@ class Bwork_Controller_Dispatcher
      * @access public
      * @return void
      */
-    public function dispatch(Bwork_Router_Router $router)
+    public function dispatch(\Bwork\Router\Router $router)
     {
         
-        $config = Bwork_Core_Registry::getInstance()->getResource('Bwork_Config_Confighandler');    
+        $config = \Bwork\Core\Registry::getInstance()->getResource('Bwork\Config\Confighandler');    
 
         $controller = $router->controller;
         $action     = $router->action;
         $module     = $router->module;
 
         if(empty($controller)) {
-            throw new Bwork_Controller_Exception('Controller was not set by the router.');
+            throw new Exception('Controller was not set by the router.');
         }
         
         if(empty($action)) {
-            throw new Bwork_Controller_Exception('Action was not set by the router.');
+            throw new Exception('Action was not set by the router.');
         }
         
         $controllerName = $controller.'Controller';
@@ -57,20 +59,23 @@ class Bwork_Controller_Dispatcher
             $controllerPath = $config->get('controller_path');
         }
 
-        if(Bwork_Loader_ApplicationAutoloader::fileExists(($filePath = $controllerPath.$filename)) === false) {
-            throw new Bwork_Controller_Exception(sprintf('[%s] does not exists', $filePath));
+        if(\Bwork_Loader_ApplicationAutoloader::fileExists(($filePath = $controllerPath.$filename)) === false) {
+            throw new Exception(sprintf('[%s] does not exists', $filePath));
         }
+
         require_once $filePath;
 
+        
         $reflectionClass = new ReflectionClass($controllerName);
 
-        if($reflectionClass->isSubclassOf('Bwork_Controller_Action') === false) {
-            throw new Bwork_Controller_Exception(sprintf('[%s] have to be an instance of Bwork_Controller_Action', $controllerName));
+        if($reflectionClass->isSubclassOf('\Bwork\Controller\Action') === false) {
+            throw new Exception(sprintf('[%s] have to be an instance of \Bwork\Controller\Action', $controllerName));
         }
 
         $controllerClass = $reflectionClass->newInstance();
         $controllerClass->invoke($router);
         $controllerClass->getResponse()->outputStatus();
+        
     }
     
 }

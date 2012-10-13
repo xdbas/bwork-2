@@ -19,8 +19,10 @@
  * @subpackage Bwork_Config
  * @version v 0.1
  */
-final class Bwork_Config_Parser_XMLConfigParser 
-    implements Bwork_Config_Parser
+namespace Bwork\Config\Parser;
+
+final class XMLConfigParser 
+    implements \Bwork\Config\Parser
 {
 
     /**

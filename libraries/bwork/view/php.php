@@ -18,7 +18,9 @@
  * @subpackage Bwork_View
  * @version v 0.2
  */
-class Bwork_View_Default implements Bwork_View_View
+namespace Bwork\View;
+use Traversable;
+class PHP implements View
 {
     
     /**
@@ -48,7 +50,7 @@ class Bwork_View_Default implements Bwork_View_View
     public function __construct($template = null)
     {
         if($template === null) {
-            $router = Bwork_Core_Registry::getInstance()->getResource('Bwork_Router_Router');
+            $router = \Bwork\Core\Registry::getInstance()->getResource('Bwork\Router\Router');
 
             $this->setView($router->controller.DIRECTORY_SEPARATOR.$router->action);
         }
@@ -68,9 +70,9 @@ class Bwork_View_Default implements Bwork_View_View
      */
     public function setView($view)
     {
-        $registry = Bwork_Core_Registry::getInstance();
-        $config   = $registry->getResource('Bwork_Config_Confighandler');
-        $router   = $registry->getResource('Bwork_Router_Router');
+        $registry = \Bwork\Core\Registry::getInstance();
+        $config   = $registry->getResource('Bwork\Config\Confighandler');
+        $router   = $registry->getResource('Bwork\Router\Router');
 
         $defaultViewExtensions = $config->exists('default_view_extensions')
             ? $config->get('default_view_extensions')
@@ -92,7 +94,7 @@ class Bwork_View_Default implements Bwork_View_View
                 return;
             }
 
-            throw new Bwork_View_Exception(
+            throw new Exception(
                 sprintf('View [%s] could not be found with any of the following extensions [%s]',
                     $view,
                     implode(',', $defaultViewExtensions)
@@ -111,7 +113,7 @@ class Bwork_View_Default implements Bwork_View_View
     public function loopThroughLocations($viewPath, array $extensions)
     {
         foreach($extensions as $ext) {
-            if(Bwork_Loader_ApplicationAutoloader::fileExists($viewPath.'.'.$ext) === true) {
+            if(\Bwork_Loader_ApplicationAutoloader::fileExists($viewPath.'.'.$ext) === true) {
                 return $viewPath.'.'.$ext;
             }
         }
@@ -144,7 +146,7 @@ class Bwork_View_Default implements Bwork_View_View
     {
         if(is_array($variables) == false
             && $variables instanceof Traversable == false) {
-            throw new Bwork_View_Exception('assignArray can only handle array or Traversable input');
+            throw new Exception('assignArray can only handle array or Traversable input');
         }
 
         foreach($variables as $key => $value) {

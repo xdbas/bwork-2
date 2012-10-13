@@ -34,7 +34,7 @@ class Bwork_Loader_LibraryAutoloader implements Bwork_Loader_Autoloader
      */
 	public static function autoload($className)
 	{
-		$filePath     = str_replace('_', DIRECTORY_SEPARATOR, strtolower($className)) . '.php';
+		$filePath     = str_replace('\\', DIRECTORY_SEPARATOR, strtolower($className)) . '.php';
 		$includePaths = explode(PATH_SEPARATOR, get_include_path());
 
 		if(($file = self::fileExists($filePath)) !== false) {
@@ -62,6 +62,7 @@ class Bwork_Loader_LibraryAutoloader implements Bwork_Loader_Autoloader
 	 */
 	public static function fileExists($filename)
     {
+        echo $filename. '<br />';
         if (file_exists($filename)) {
             return $filename;
         }
@@ -80,6 +81,7 @@ class Bwork_Loader_LibraryAutoloader implements Bwork_Loader_Autoloader
         	}
         }
 
+        echo $filename.'<br />';
         return false;
     }
 

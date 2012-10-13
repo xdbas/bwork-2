@@ -18,6 +18,7 @@
  * @subpackage Bwork_Data
  * @version v 0.1
  */
-class Bwork_Data_Exception extends Exception
+namespace Bwork\Data;
+class Exception extends \Exception
 {
 }

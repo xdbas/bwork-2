@@ -18,7 +18,9 @@
  * @subpackage Bwork_Layout
  * @version v 0.2
  */
-interface Bwork_Layout_Layout
+namespace Bwork\Layout;
+
+interface Layout
 {
 
     /**

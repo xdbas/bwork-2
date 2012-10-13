@@ -18,6 +18,8 @@
  * @subpackage Bwork_Layout
  * @version v 0.1
  */
-class Bwork_Layout_Exception extends Exception
+namespace Bwork\Layout;
+
+class Exception extends \Exception
 {
 }

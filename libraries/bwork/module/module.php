@@ -18,7 +18,8 @@
  * @subpackage Bwork_Module
  * @version v 0.1
  */
-interface Bwork_Module_Module
+namespace Bwork\Module;
+interface Module
 {
 
     /**

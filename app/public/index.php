@@ -9,4 +9,4 @@ define('LIBRARY_PATH', BASE . DIRECTORY_SEPARATOR . 'libraries' . DIRECTORY_SEPA
 set_include_path(/*get_include_path() . PATH_SEPARATOR . */LIBRARY_PATH);
 
 require_once 'bwork/application.php';
-Bwork_Application::Run();
+bwork\Application::Run();

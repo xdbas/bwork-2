@@ -18,7 +18,9 @@
  * @subpackage Bwork_Http
  * @version v 0.2
  */
-class Bwork_Http_Request
+namespace Bwork\Http;
+
+class Request
 {
     
     /**
@@ -82,7 +84,7 @@ class Bwork_Http_Request
     public function create($uri = null, $ssl = false)
     {
         if(empty($this->defaultBaseUri)) {
-            $this->defaultBaseUri = Bwork_Core_Registry::getInstance()->getResource('Bwork_Config_Confighandler')->get('sub_url');
+            $this->defaultBaseUri = \Bwork\Core\Registry::getInstance()->getResource('Bwork_Config_Confighandler')->get('sub_url');
         }
 
         return ($ssl === true? 'https://' . $_SERVER['SERVER_NAME']:'').$this->defaultBaseUri.($uri !== null? $uri:'');
@@ -119,7 +121,7 @@ class Bwork_Http_Request
                 || $default === null) {
                 return $default;
             }
-            throw new Bwork_Http_Exception(sprintf('Param: %s was undefined in URI Params.', $param));
+            throw new Exception(sprintf('Param: %s was undefined in URI Params.', $param));
         }
         
         return $this->params[$param];
@@ -164,7 +166,7 @@ class Bwork_Http_Request
                 || $default === null) {
                 return $default;
             }
-            throw new Bwork_Http_Exception('No arguments found in Http URI.');
+            throw new Exception('No arguments found in Http URI.');
         }
         
         if(isset($args[$key]) === false) {
@@ -172,7 +174,7 @@ class Bwork_Http_Request
                 || $default === null) {
                 return $default;
             }
-            throw new Bwork_Http_Exception(sprintf('Arg: %s was undefined in URI Args.', $key));
+            throw new Exception(sprintf('Arg: %s was undefined in URI Args.', $key));
         }
 
         return $args[$key];

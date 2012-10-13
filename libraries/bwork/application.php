@@ -19,7 +19,9 @@
  * @subpackage Bwork
  * @version v 0.4
  */
-class Bwork_Application 
+namespace Bwork;
+
+class Application 
 {
     
     /**
@@ -57,7 +59,7 @@ class Bwork_Application
         
         if(file_exists(APPLICATION_PATH.'bootstrap.php')) {
             require_once APPLICATION_PATH.'bootstrap.php';
-            $bootstrap = new Bootstrap();
+            $bootstrap = new \App\Bootstrap();
         }
     }
     
@@ -66,7 +68,7 @@ class Bwork_Application
      */
     public static function _initPreBootstrap() 
     {
-        $bootstrap = new Bwork_Bootstrap_Bootstrap();
+        $bootstrap = new Bootstrap\Bootstrap();
     }
 
     /**
@@ -114,7 +116,7 @@ class Bwork_Application
         self::_initAutoloader();
         self::_initBootstrap();
         
-        $router = Bwork_Core_Registry::getInstance()->getResource('Bwork_Router_Router');
+        $router = Core\Registry::getInstance()->getResource('Bwork\Router\Router');
         $router->route();
         
         self::Dispatch($router);
@@ -125,9 +127,9 @@ class Bwork_Application
      * @param Bwork_Router_Router $router
      * @return void
      */
-    public static function Dispatch(Bwork_Router_Router $router) 
+    public static function Dispatch(Router\Router $router) 
     {
-        $dispatcher = new Bwork_Controller_Dispatcher();
+        $dispatcher = new Controller\Dispatcher();
         $dispatcher->dispatch($router);
     }
     

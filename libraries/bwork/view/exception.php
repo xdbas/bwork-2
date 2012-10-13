@@ -18,6 +18,7 @@
  * @subpackage Bwork_View
  * @version v 0.1
  */
-class Bwork_View_Exception extends Exception
+namespace Bwork\View;
+class Exception extends \Exception
 {
 }

@@ -18,7 +18,9 @@
  * @subpackage Bwork_Router
  * @version v 0.1
  */
-interface Bwork_Router_Handler
+namespace Bwork\Router;
+
+interface Handler
 {
     
     /**

@@ -18,7 +18,8 @@
  * @subpackage Bwork_View
  * @version v 0.1
  */
-interface Bwork_View_View
+namespace Bwork\View;
+interface View
 {
 
     /**

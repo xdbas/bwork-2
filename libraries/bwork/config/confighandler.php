@@ -19,9 +19,13 @@
  * @version v 0.3
  * @final
  */
-final class Bwork_Config_Confighandler 
+namespace Bwork\Config;
+
+use ArrayObject, Travsersable;
+
+final class Confighandler 
     extends ArrayObject 
-    implements Bwork_config_Handler
+    implements Handler
 {
     
     /**
@@ -50,7 +54,7 @@ final class Bwork_Config_Confighandler
                 $data = $this->parsers[$file_extension]->parse($file);
             } 
             else {
-                throw new Bwork_Config_Exception(sprintf('File type %s is not supported.', $file_extension));
+                throw new Exception(sprintf('File type %s is not supported.', $file_extension));
             }
         }
         
@@ -71,7 +75,7 @@ final class Bwork_Config_Confighandler
     {
         if(is_array($data) == false
             && $data instanceof Travsersable == false) {
-            throw new Bwork_Config_Exception('Input data should be an array.');
+            throw new Exception('Input data should be an array.');
         }
         
         foreach($data as $item => $value) {
@@ -88,14 +92,14 @@ final class Bwork_Config_Confighandler
      * @throws Bwork_Config_Exception
      * @return Bwork_Config_Confighandler
      */
-    public function setParser($ext, Bwork_Config_Parser $parser)
+    public function setParser($ext, Parser $parser)
     {
         if(is_object($parser) === false) {
-            throw new Bwork_Config_Exception(sprintf('Parser %s is not an object.', get_class($parser)));
+            throw new Exception(sprintf('Parser %s is not an object.', get_class($parser)));
         }
 
-        if($parser instanceof Bwork_Config_Parser === false) {
-            throw new Bwork_Config_Exception(sprintf('Parser %s is not an instance of Bwork_Config_Parser.', get_class($parser)));
+        if($parser instanceof Parser === false) {
+            throw new Exception(sprintf('Parser %s is not an instance of Bwork_Config_Parser.', get_class($parser)));
         }
 
         $this->parsers[$ext] = $parser;
@@ -128,7 +132,7 @@ final class Bwork_Config_Confighandler
     public function set($key, $value)
     {
         if($this->offsetExists($key) === true){
-            throw new Bwork_Config_Exception(sprintf('Setting %s is already set.', $key));
+            throw new Exception(sprintf('Setting %s is already set.', $key));
         }
 
         $this->offsetSet($key, $value);
@@ -159,7 +163,7 @@ final class Bwork_Config_Confighandler
     public function get($key)
     {
         if($this->offsetExists($key) === false) {
-            throw new Bwork_Config_Exception(sprintf('%s: Is not found in Bwork_Config_Confighandler::Settings', $key));
+            throw new Exception(sprintf('%s: Is not found in Bwork_Config_Confighandler::Settings', $key));
         }
 
         return $this->offsetGet($key);

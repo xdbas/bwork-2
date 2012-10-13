@@ -19,8 +19,10 @@
  * @subpackage Bwork_Config
  * @version v 0.1
  */
-final class Bwork_Config_Parser_PHPConfigParser 
-    implements Bwork_Config_Parser
+namespace Bwork\Config\Parser;
+
+final class PHPConfigParser 
+    implements \Bwork\Config\Parser
 {
 
     /**
